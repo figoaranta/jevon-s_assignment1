@@ -470,7 +470,12 @@ def patient_registration():
             patient.insert(0, id)
         else:
             last_line = lines[-1]
-            id = int(last_line[0]) + 1
+            number = ""
+            for char in last_line:
+                if char == "-":
+                    break
+                number = number + char                
+            id = int(number) + 1
             patient.insert(0, id)
 
     with open('patients.txt', 'a') as file:

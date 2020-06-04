@@ -11,7 +11,8 @@
 def edit_patient_status():
     count = 0
     word = []
-
+    case_id = ""
+    patient_id = ""
     f = open("positive_patients.txt", "r")
     for line in f.readlines():
         for char in line:
@@ -24,15 +25,45 @@ def edit_patient_status():
         status = "".join(word)
         del word[:]
         count = 0
-        print("CASE ID:", line[0], "- PATIENT ID:", line[2], "- STATUS:", status)
-
+        for char in line:
+            if char == "-":
+                break
+            else:
+                case_id = case_id + char
+        for char in line:
+            if count == 2:
+                break
+            else:
+                if char == "-":
+                    count += 1
+                elif count == 1:
+                    patient_id = patient_id + char
+        count = 0
+        print("CASE ID:", case_id, "- PATIENT ID:", patient_id, "- STATUS:", status)
+        case_id = ""
+        patient_id = ""
     inp = int(input("PLEASE INPUT CASE ID:"))
     case_id = inp
 
     f = open("positive_patients.txt", "r")
+    case_id = ""
+    patient_id = ""
     for line in f.readlines():
-        if int(line[0]) == case_id:
-            patient_id = line[2]
+        for char in line:
+            if char == "-":
+                break
+            else:
+                case_id = case_id + char
+        for char in line:
+            if count == 2:
+                break
+            else:
+                if char == "-":
+                    count += 1
+                elif count == 1:
+                    patient_id = patient_id + char
+        count = 0
+        if case_id:
             print("=======================")
             print("CURRENT STATUS:", status)
             print("CASE ID:", case_id)

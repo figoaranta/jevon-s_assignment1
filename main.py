@@ -141,24 +141,40 @@ def test_3(code, patient_id, txt):
         for i in range(0, len(str_positive_patient)):
             int_positive_patient.append(int(str_positive_patient[i]))
 
+        with open("test_result.txt", "r") as file:
+            lines = file.read().splitlines()
+            if lines:
+                txt.insert(0,"\n")
+
+        with open("test_result3.txt", "r") as file:
+            lines = file.read().splitlines()
+            if lines:
+                test3.insert(0,"\n")
+
         if patient_id not in int_positive_patient:
+            with open("positive_patients.txt", "r") as file:
+                lines = file.read().splitlines()
+                if lines:
+                    with open("positive_patients.txt", "a") as f:
+                        f.write("\n")
             with open('positive_patients.txt', 'a') as file:
-                file.write("\n")
                 string = str(patient_id) + "-" + str(test_number) + "-ACTIVE"
                 file.write("%s" % str(string))
 
         with open('test_result.txt', 'a') as file:
-            file.write("\n")
             for i in range(0, len(txt)):
                 if i == len(txt) - 1:
+                    file.write("%s" % str(txt[i]))
+                elif txt[i]=="\n":
                     file.write("%s" % str(txt[i]))
                 else:
                     file.write("%s-" % str(txt[i]))
 
         with open('test_result3.txt', 'a') as file:
-            file.write("\n")
             for i in range(0, len(test3)):
                 if i == len(test3) - 1:
+                    file.write("%s" % str(test3[i]))
+                elif test3[i]=="\n":
                     file.write("%s" % str(test3[i]))
                 else:
                     file.write("%s-" % str(test3[i]))
@@ -229,8 +245,12 @@ def test_1(code, patient_id, txt):
     for i in range (0,len(str_patient_tested)):
         int_patient_tested.append(int(str_patient_tested[i]))
     if patient_id not in int_patient_tested:
+        with open("tested_patients.txt", "r") as file:
+                lines = file.read().splitlines()
+                if lines:
+                    with open("tested_patients.txt", "a") as f:
+                        f.write("\n")
         with open('tested_patients.txt', 'a') as file:
-            file.write("\n")
             file.write("%s" % str(patient_id))
 
 
@@ -285,15 +305,28 @@ def test_1(code, patient_id, txt):
                 case = int(last_line[0]) + 1
 
         if patient_id not in int_positive_patient:
+            with open("positive_patients.txt", "r") as file:
+                lines = file.read().splitlines()
+                if lines:
+                    with open('positive_patients.txt', 'a') as f:
+                        f.write("\n")
             with open('positive_patients.txt', 'a') as file:
-                file.write("\n")
                 string = str(case)+"-"+str(patient_id)+"-ACTIVE"
                 file.write("%s" % str(string))
 
+        with open('test_result.txt', 'r') as file:
+            lines = file.read().splitlines()
+            if lines:
+                with open('test_result.txt', 'a') as f:
+                    f.write("\n")
 
+        with open('test_result1.txt', 'r') as file:
+            lines = file.read().splitlines()
+            if lines:
+                with open('test_result1.txt', 'a') as f:
+                    f.write("\n")
 
         with open('test_result.txt', 'a') as file:
-            file.write("\n")
             for i in range(0, len(txt)):
                 if i == len(txt) - 1:
                     file.write("%s" % str(txt[i]))
@@ -301,7 +334,6 @@ def test_1(code, patient_id, txt):
                     file.write("%s-" % str(txt[i]))
 
         with open('test_result1.txt', 'a') as file:
-            file.write("\n")
             for i in range(0, len(txt)):
                 if i == len(txt) - 1:
                     file.write("%s" % str(txt[i]))
@@ -384,24 +416,40 @@ def test_2(code, patient_id, txt):
             int_positive_patient.append(int(str_positive_patient[i]))
 
         if patient_id not in int_positive_patient:
+            with open("positive_patients.txt", "r") as file:
+                lines = file.read().splitlines()
+                if lines:
+                    with open("positive_patients.txt", "a") as f:
+                        f.write("\n")
             with open('positive_patients.txt', 'a') as file:
-                file.write("\n")
                 string = str(patient_id) + "-" + str(test_number) + "-ACTIVE"
                 file.write("%s" % str(string))
 
+        with open("test_result.txt", "r") as file:
+            lines = file.read().splitlines()
+            if lines:
+                txt.insert(0,"\n")
+
+        with open("test_result2.txt", "r") as file:
+            lines = file.read().splitlines()
+            if lines:
+                test2.insert(0,"\n")
+
         with open('test_result.txt', 'a') as file:
-            file.write("\n")
             for i in range(0, len(txt)):
                 if i == len(txt) - 1:
+                    file.write("%s" % str(txt[i]))
+                elif txt[i] == "\n":
                     file.write("%s" % str(txt[i]))
                 else:
                     file.write("%s-" % str(txt[i]))
 
         with open('test_result2.txt', 'a') as file:
-            file.write("\n")
             for i in range(0, len(test2)):
                 if i == len(test2) - 1:
                     file.write("%s" % str(test2[i]))
+                elif test2[i] == "\n":
+                    file.write("%s" % str(txt[i]))
                 else:
                     file.write("%s-" % str(test2[i]))
 
@@ -435,7 +483,7 @@ def check_recovered_cases():
     RECOVERED = 0
     f = open("positive_patients.txt", "r")
     for line in f.readlines():
-        if line[4] == "R":
+        if "R" in line:
             RECOVERED += 1
     return RECOVERED
 
@@ -443,7 +491,7 @@ def check_active_cases():
     ACTIVE = 0
     f = open("positive_patients.txt", "r")
     for line in f.readlines():
-        if line[4] == "A":
+        if "A" in line:
             ACTIVE += 1
     return ACTIVE
 
@@ -497,7 +545,7 @@ def patient_registration():
     with open("patients.txt", "r") as file:
         lines = file.read().splitlines()
         if not lines:
-            id = 1
+            id = 1001
             patient.insert(0, id)
         else:
             last_line = lines[-1]
@@ -508,11 +556,13 @@ def patient_registration():
                 number = number + char                
             id = int(number) + 1
             patient.insert(0, id)
+            patient.insert(0,"\n")
 
     with open('patients.txt', 'a') as file:
-        file.write("\n")
         for i in range(0, len(patient)):
             if i == len(patient) - 1:
+                file.write("%s" % str(patient[i]))
+            elif patient[i] == "\n":
                 file.write("%s" % str(patient[i]))
             else:
                 file.write("%s-" % str(patient[i]))

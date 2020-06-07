@@ -138,6 +138,15 @@ def test_3(code, patient_id, txt):
 
         str_positive_patient = get_positive_patient()
         int_positive_patient = []
+
+        with open("positive_patients.txt", "r") as file:
+            lines = file.read().splitlines()
+            if not lines:
+                case = 1
+            else:
+                last_line = lines[-1]
+                case = int(last_line[0]) + 1
+
         for i in range(0, len(str_positive_patient)):
             int_positive_patient.append(int(str_positive_patient[i]))
 
@@ -158,7 +167,7 @@ def test_3(code, patient_id, txt):
                     with open("positive_patients.txt", "a") as f:
                         f.write("\n")
             with open('positive_patients.txt', 'a') as file:
-                string = str(patient_id) + "-" + str(test_number) + "-ACTIVE"
+                string = str(case) + "-" + str(patient_id) + "-ACTIVE"
                 file.write("%s" % str(string))
 
         with open('test_result.txt', 'a') as file:
@@ -235,7 +244,7 @@ def get_positive_patient():
         if line[0] == "\n":
             pass
         else:
-            positive_patient.append(line[0])
+            positive_patient.append(line[2])
     return positive_patient
 
 def test_1(code, patient_id, txt):
@@ -312,6 +321,7 @@ def test_1(code, patient_id, txt):
                         f.write("\n")
             with open('positive_patients.txt', 'a') as file:
                 string = str(case)+"-"+str(patient_id)+"-ACTIVE"
+                print(patient_id)
                 file.write("%s" % str(string))
 
         with open('test_result.txt', 'r') as file:
@@ -412,6 +422,14 @@ def test_2(code, patient_id, txt):
         str_positive_patient = get_positive_patient()
         print(str_positive_patient)
         int_positive_patient = []
+        with open("positive_patients.txt", "r") as file:
+            lines = file.read().splitlines()
+            if not lines:
+                case = 1
+            else:
+                last_line = lines[-1]
+                case = int(last_line[0]) + 1
+
         for i in range(0, len(str_positive_patient)):
             int_positive_patient.append(int(str_positive_patient[i]))
 
@@ -422,7 +440,7 @@ def test_2(code, patient_id, txt):
                     with open("positive_patients.txt", "a") as f:
                         f.write("\n")
             with open('positive_patients.txt', 'a') as file:
-                string = str(patient_id) + "-" + str(test_number) + "-ACTIVE"
+                string = str(case) + "-" + str(patient_id) + "-ACTIVE"
                 file.write("%s" % str(string))
 
         with open("test_result.txt", "r") as file:
